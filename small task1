@@ -1,0 +1,23 @@
+import pandas as pd
+import numpy as np
+
+lista1 = ['o','r','o','r','r']
+lista2 = ['r','o','o','o','r']
+print(lista1)
+index = 2
+new_value = 'r'
+lista2[index] = new_value
+print(lista2)
+string='Mateusz Pawlicki'
+print(string[-3:])
+print(lista1.count('o'),'/',len(lista1))
+df=pd.DataFrame(zip(lista1,lista2))
+print(df)
+df.columns=['orły','reszki']
+print(df)
+dataframe = pd.DataFrame({'Name':['Shobhit','vaibhav','vimal','Sourabh'],'Class':[11,12,10,9],'Age':[18,20,21,17]})
+print(dataframe)
+dataframe2 = dataframe.drop('Class',axis=1)
+print(dataframe2)
+dataframe2 = dataframe2.rename(columns={'Age': 'wiek'},inplace=True)
+
