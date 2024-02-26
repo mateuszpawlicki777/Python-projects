@@ -1,0 +1,60 @@
+import matplotlib.pyplot as plt
+
+print("Program obliczający średnią frekwencję z 7 wykładów Prawa gospodarczego.")
+
+class Klasa1:
+    def __init__(self):
+        self.dane = []
+    def wpisz_dane(self):
+        for i in range(1, 8):
+            while True:
+                try:
+                    frekwencja = input(f"Podaj frekwencję na wykładzie {i} (pełną liczbą, bez % na końcu): ")
+                    if frekwencja == '':
+                        raise ValueError("Wprowadź wartosć")
+                    frekwencja = int(frekwencja)
+                    if frekwencja < 0 or frekwencja > 100:
+                        raise ValueError("Frekwencja między 0 a 100%")
+                    break
+                except ValueError as error:
+                    print("Bład:", error)
+            self.dane.append(frekwencja)
+
+klasa1 = Klasa1()
+klasa1.wpisz_dane()
+
+class Klasa2:
+    def __init__(self, klasa1):
+        self._dane = klasa1.dane
+    def dane(self):
+        return self._dane
+    def dane(self,_dane):
+        self._dane = _dane
+    def srednia_frekwencja(self):
+        return round(sum(self._dane)/len(self._dane),2)
+    def wyswietl_dane(self):
+        for i, frekwencja in enumerate(self._dane, start=1):
+            print(f"Frekwencja na wykładzie {i}: {frekwencja}%")
+        print(f"Średnia frekwencja: {self.srednia_frekwencja()}%") 
+        
+klasa2 = Klasa2(klasa1)
+klasa2.wyswietl_dane()
+
+class Klasa3:
+    def __init__(self, klasa2):
+        self._dane = klasa2._dane
+    def pokaz_wykres(self):
+        plt.plot(range(1, 8), self._dane)
+        plt.xlabel('Wykład')
+        plt.ylabel('Frekwencja (%)')
+        plt.title('Frekwencja na wykładach z prawa gospodarczego o 8 rano')
+        plt.savefig('wykres.png')
+        plt.show()
+    
+klasa3 = Klasa3(klasa2)
+klasa3.pokaz_wykres()
+
+with open('wynik.txt', 'w') as f:
+    for i, frekwencja in enumerate(klasa2._dane, start=1):
+        f.write(f"Frekwencja na wykładzie {i}: {frekwencja}%\n")
+    f.write(f"Średnia frekwencja: {klasa2.srednia_frekwencja()}%\n")
