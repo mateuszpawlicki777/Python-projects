@@ -1,0 +1,35 @@
+import pandas as pd
+import numpy as np
+
+#1
+lista_1=[x for x in range(1,11)]
+lista_2=[x for x in range(5,55,4)]
+
+print('lista 1:\n', lista_1)
+print('lista 2:\n', lista_2)
+#2
+lista_1.append(15)
+print('lista 1:\n', lista_1)
+#3
+ramka=pd.DataFrame(zip(lista_1,lista_2))
+print('ramka danych:\n', ramka)
+#4
+ramka.columns = ['numer','wartosc']
+print('ramka danych:\n', ramka)
+#5
+ramka['obliczenia']=(ramka['numer']*ramka['wartosc']/3)
+print('ramka danych:\n',ramka)
+#6
+print('sumy z pyt 6:\n', ramka.iloc[5:,1:].sum(axis=1))
+#7
+ramka.iloc[3,0]=np.NaN
+print('ramka danych:\n', ramka)
+#8
+ramka.sort_values(by='obliczenia',ascending=False,inplace=True)
+print('ramka danych:\n', ramka)
+#9
+ramka.drop(ramka[ramka['obliczenia']<=50].index,inplace=True)
+print('ramka danych:\n', ramka)
+#10
+ramka.reset_index(inplace=True,drop=True)
+ramka.to_csv('ramka.csv',index = True,sep=';',decimal=',')
