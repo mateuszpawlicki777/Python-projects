@@ -1,0 +1,70 @@
+import math
+
+def podaj_kwote():
+    wartosc = float(input("Podaj kwotę w zł (1 do 500): "))
+    while wartosc < 1 or wartosc > 500:
+        wartosc = float(input("Kwota poza zakresem. Spróbuj ponownie: "))
+    wartosc = round(wartosc, 2)
+    return wartosc
+
+def waga_monet(wartosc):
+    grosz_waga = 1.64
+    dwa_grosze_waga = 2.13
+    zloty_waga = 5
+    
+    pelna_liczba = int(wartosc)
+    reszta = round((wartosc - pelna_liczba)*100)
+    
+    if reszta % 2 == 0:
+        dwa_grosze = reszta // 2
+        grosz = 0
+    else:
+        dwa_grosze = reszta // 2
+        grosz = 1
+    
+    zloty = pelna_liczba
+    waga_calkowita = (grosz * grosz_waga +
+                      dwa_grosze * dwa_grosze_waga +
+                      zloty * zloty_waga)
+    
+    print(f"\nWaga monet: {waga_calkowita}g")
+    
+    with open("wynik.txt", "a") as file:
+        file.write(f"Waga monet: {waga_calkowita}g\n")
+
+def powierzchnia_banknotu(wartosc):
+    dziesiec_zl_pow = 120 * 60
+    sto_zl_pow = 138 * 69
+    
+    zaokraglenie = round((wartosc + 4.99999) / 10) * 10
+    sto_zl = int(zaokraglenie // 100)
+    dziesiec_zl = (zaokraglenie % 100)
+    
+    powierzchnia_calk = (sto_zl * sto_zl_pow +
+                         (dziesiec_zl // 10) * dziesiec_zl_pow)
+    
+    print(f"\nPowierzchnia banknotów: {powierzchnia_calk}mm^2")
+    
+    with open("wynik.txt", "a") as file:
+        file.write(f"Powierzchnia banknotów: {powierzchnia_calk}mm^2\n")
+
+def warunek():
+    while True:
+       print("Program obliczający wagę monet / powierzchnię banknotów dla podanej kwoty w zł")
+       wartosc = podaj_kwote()
+    
+       if 1 <= wartosc < 50:
+           waga_monet(wartosc)
+       elif 50 <= wartosc <= 100:
+           waga_monet(wartosc)
+           powierzchnia_banknotu(wartosc)
+       elif 100 < wartosc <= 500:
+           powierzchnia_banknotu(wartosc)
+    
+       print("\nMiłego dnia")
+       kontynuacja = input("Czy chcesz kontynuować? (t/n): ")
+       if kontynuacja != 't':
+            break
+
+warunek()
+
